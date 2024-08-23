@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.LocalMessage;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.LocalMessage
@@ -9,7 +8,7 @@ namespace Microsoft.Extensions.LocalMessage
     /// </summary>
     /// <typeparam name="TRequest">请求的类型</typeparam>
     /// <typeparam name="TResponse">响应的类型</typeparam>
-    public interface IRequestHandler<TRequest, TResponse> : ILocalEventHandler
+    public interface IRequestHandler<TRequest, TResponse>
         where TRequest : class, IRequest<TResponse>
         where TResponse : class
     {

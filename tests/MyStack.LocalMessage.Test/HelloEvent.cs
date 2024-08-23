@@ -2,7 +2,7 @@
 
 namespace MyStack.LocalMessage.Test
 {
-    public class HelloEvent: ILocalEvent
+    public class HelloEvent : ILocalEvent
     {
     }
 }

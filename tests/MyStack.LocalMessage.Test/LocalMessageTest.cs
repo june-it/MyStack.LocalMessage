@@ -32,6 +32,6 @@ namespace MyStack.LocalMessage.Test
             var messageBus = GetServiceProvider().GetRequiredService<ILocalMessageBus>();
             messageBus.PublishAsync(new WrappedEventData());
             Assert.Pass();
-        } 
+        }
     }
 }

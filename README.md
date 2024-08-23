@@ -78,9 +78,9 @@ public class WrappedEventData
 
 ### 订阅事件体
 ```
-public class WrappedEventHandler : ILocalEventHandler<WrappedEvent<WrappedEventData>>
+public class WrappedEventHandler : ILocalEventHandler<LocalEventWrapper<WrappedEventData>>
 {
-    public async Task HandleAsync(WrappedEvent<WrappedEventData> eventData, CancellationToken cancellationToken = default)
+    public async Task HandleAsync(LocalEventWrapper<WrappedEventData> eventData, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }

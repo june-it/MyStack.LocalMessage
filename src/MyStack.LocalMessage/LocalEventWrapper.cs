@@ -2,20 +2,20 @@
 
 namespace Microsoft.Extensions.LocalMessage
 {
-    
-    public class WrappedEvent<TData> : ILocalEvent
+
+    public class LocalEventWrapper<TData> : ILocalEvent
     {
         public TData Data { get; }
         public Dictionary<string, object> Metadata { get; }
-        public WrappedEvent(TData data)
+        public LocalEventWrapper(TData data)
         {
             Data = data;
             Metadata = new Dictionary<string, object>();
         }
     }
-    public class WrappedEvent : WrappedEvent<object>
+    public class LocalEventWrapper : LocalEventWrapper<object>
     {
-        public WrappedEvent(object data) : base(data)
+        public LocalEventWrapper(object data) : base(data)
         {
         }
     }

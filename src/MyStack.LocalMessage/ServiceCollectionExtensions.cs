@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ILocalEventHandler<>));
                     foreach (var handlerInterface in handlerInterfaces)
                     {
-                        if (handlerInterface.GetGenericArguments()[0].IsGenericType && handlerInterface.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(WrappedEvent<>))
+                        if (handlerInterface.GetGenericArguments()[0].IsGenericType && handlerInterface.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(LocalEventWrapper<>))
                         {
                             services.AddTransient(typeof(ILocalEventHandler<>).MakeGenericType(handlerInterface.GetGenericArguments()), eventHandlerType);
                             subscriptions.Add(new SubscriptionInfo(handlerInterface.GetGenericArguments()[0].GetGenericArguments()[0], typeof(ILocalEventHandler<>)));

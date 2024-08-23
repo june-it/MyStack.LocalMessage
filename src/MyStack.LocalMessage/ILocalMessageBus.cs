@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.LocalMessage;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.LocalMessage
