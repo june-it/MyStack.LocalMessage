@@ -9,11 +9,11 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// 添加本地消息总线
+        /// Add the local message bus
         /// </summary>
-        /// <param name="services">服务集合</param> 
-        /// <param name="assemblies">注册事件订阅的程序集</param>
-        /// <returns>返回服务集合</returns>
+        /// <param name="services">Service collection</param> 
+        /// <param name="assemblies">Register the assembly for event subscriptions</param>
+        /// <returns>Return the service collection</returns>
         public static IServiceCollection AddLocalMessage(this IServiceCollection services, params Assembly[] assemblies)
         {
 
