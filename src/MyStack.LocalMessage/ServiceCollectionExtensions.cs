@@ -1,19 +1,19 @@
-﻿using Microsoft.Extensions.LocalMessage;
-using Microsoft.Extensions.LocalMessage.Subscriptions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.LocalMessage;
+using Microsoft.Extensions.LocalMessage.Subscriptions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// 添加本地消息总线
+        /// Add the local message bus
         /// </summary>
-        /// <param name="services">服务集合</param> 
-        /// <param name="assemblies">注册事件订阅的程序集</param>
-        /// <returns>返回服务集合</returns>
+        /// <param name="services">Service collection</param> 
+        /// <param name="assemblies">Register the assembly for event subscriptions</param>
+        /// <returns>Return the service collection</returns>
         public static IServiceCollection AddLocalMessage(this IServiceCollection services, params Assembly[] assemblies)
         {
 
@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ILocalEventHandler<>));
                     foreach (var handlerInterface in handlerInterfaces)
                     {
-                        if (handlerInterface.GetGenericArguments()[0].IsGenericType && handlerInterface.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(WrappedEvent<>))
+                        if (handlerInterface.GetGenericArguments()[0].IsGenericType && handlerInterface.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(LocalEventWrapper<>))
                         {
                             services.AddTransient(typeof(ILocalEventHandler<>).MakeGenericType(handlerInterface.GetGenericArguments()), eventHandlerType);
                             subscriptions.Add(new SubscriptionInfo(handlerInterface.GetGenericArguments()[0].GetGenericArguments()[0], typeof(ILocalEventHandler<>)));

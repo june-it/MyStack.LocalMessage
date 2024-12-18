@@ -1,21 +1,21 @@
 # MyStack.LocalMessage
 
-开源的轻量级本地事件总线类库
+Open-source lightweight local message bus library
 
 
 | nuget      | stats |
 | ----------- | ----------- | 
 | [![nuget](https://img.shields.io/nuget/v/MyStack.LocalMessage.svg?style=flat-square)](https://www.nuget.org/packages/MyStack.LocalMessage)    | [![stats](https://img.shields.io/nuget/dt/MyStack.LocalMessage.svg?style=flat-square)](https://www.nuget.org/stats/packages/MyStack.LocalMessage?groupby=Version)         |
 
-# 开始使用
+# Getting Started
 
-## 添加服务支持
+## Add Service Support
 ``` 
 services.AddLocalMessage(Assembly.GetExecutingAssembly());
 ```
 
-## 1、事件订阅发布
-### 定义事件
+## 1、Event Subscription and Publication
+### Define Events
 ```
 public class HelloEvent: ILocalEvent
 {
@@ -23,7 +23,7 @@ public class HelloEvent: ILocalEvent
 
 ```
 
-### 订阅事件
+### Subscribe to Events
 ```
 public class HelloEventHandler : ILocalEventHandler<HelloEvent>
 {
@@ -33,26 +33,26 @@ public class HelloEventHandler : ILocalEventHandler<HelloEvent>
     }
 }
 ```
-### 发布事件
+### Publish Events
 ```
 await eventBus.PublishAsync(new HelloEvent());
 ```
-## 2、请求/响应订阅发布
-### 定义请求
+## 2、Request/Response Subscription and Publication
+### Define Requests
 ```
 public class Ping : IRequest<Pong>
 {
     
 }
 ```
-### 定义响应
+### Define Responses
 ```
  public class Pong
  {
  }
 ```
 
-### 订阅请求并返回响应结果
+### Subscribe to Requests and Return Response Results
 ```
 public class PingHandler : IRequestHandler<Ping, Pong>
 {
@@ -62,13 +62,13 @@ public class PingHandler : IRequestHandler<Ping, Pong>
     }
 }
 ```
-### 发布请求
+### Publish Requests
 ```
 var pongMessage = eventBus.SendAsync(ping);
 ```
 
-## 3、事件体订阅发布
-### 定义事件体的消息对象
+## 3、Wrapped Event Data Subscription and Publication
+### Define Wrapped Event Data
 ```
 public class WrappedEventData
 {
@@ -76,23 +76,23 @@ public class WrappedEventData
 
 ```
 
-### 订阅事件体
+### Subscribe to Wrapped Event Data
 ```
-public class WrappedEventHandler : ILocalEventHandler<WrappedEvent<WrappedEventData>>
+public class WrappedEventHandler : ILocalEventHandler<LocalEventWrapper<WrappedEventData>>
 {
-    public async Task HandleAsync(WrappedEvent<WrappedEventData> eventData, CancellationToken cancellationToken = default)
+    public async Task HandleAsync(LocalEventWrapper<WrappedEventData> eventData, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }
 }
 ```
 
-### 发布事件体
+###  Publish Wrapped Event Data
 ```
 eventBus.SendAsync(new WrappedEventData());
 ```
 
 
-# 许可证
+#  License
 
 MIT

@@ -1,10 +1,10 @@
 ﻿namespace Microsoft.Extensions.LocalMessage
 {
     /// <summary>
-    /// 表示一个事件接口
+    /// Represents an event interface
     /// </summary>
     public interface ILocalEvent
-    { 
+    {
     }
- 
+
 }

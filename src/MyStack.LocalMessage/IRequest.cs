@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Extensions.LocalMessage
 {
     /// <summary>
-    /// 表示一个可返回结果的事件接口
+    /// Represents an event interface that can return a result
     /// </summary>
     /// <typeparam name="TResponse"></typeparam>
     public interface IRequest<TResponse>
