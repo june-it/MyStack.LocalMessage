@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.LocalMessage.Subscriptions;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.LocalMessage.Subscriptions;
 
 namespace Microsoft.Extensions.LocalMessage
 {
@@ -43,6 +42,8 @@ namespace Microsoft.Extensions.LocalMessage
                     var eventHandlerType = subscription.HandlerType.MakeGenericType(wrappedEvent);
                     var eventHandler = _serviceProvider.GetRequiredService(eventHandlerType);
                     var wrappedEventData = Activator.CreateInstance(wrappedEvent, eventData);
+                    if (wrappedEventData == null)
+                        throw new ArgumentNullException(nameof(wrappedEventData));
                     await ((dynamic)eventHandler).HandleAsync((dynamic)wrappedEventData, cancellationToken);
                 }
             }
@@ -53,10 +54,14 @@ namespace Microsoft.Extensions.LocalMessage
             var requestDataType = requestData.GetType();
             var subscriptions = _subscriptionManager.GetSubscriptions(requestDataType);
             if (subscriptions == null)
-                throw new InvalidOperationException("未查找到任何事件订阅。");
+                throw new InvalidOperationException("No event subscriptions were found.");
             if (subscriptions != null && subscriptions.Count > 1)
-                throw new InvalidOperationException("有且仅能支持一个事件订阅。");
-            var requestHandlerType = subscriptions![0].HandlerType.MakeGenericType(subscriptions[0].MessageType, subscriptions[0].ResponseType);
+                throw new InvalidOperationException("Only one event subscription is supported.");
+            Type requestHandlerType;
+            if (subscriptions?[0]?.ResponseType != null)
+                requestHandlerType = subscriptions![0].HandlerType.MakeGenericType(subscriptions[0].MessageType, subscriptions[0].ResponseType!);
+            else
+                requestHandlerType = subscriptions![0].HandlerType.MakeGenericType(subscriptions[0].MessageType);
             var requestHandler = _serviceProvider.GetRequiredService(requestHandlerType);
             return await ((dynamic)requestHandler).HandleAsync((dynamic)requestData, cancellationToken);
         }
