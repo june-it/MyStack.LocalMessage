@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.LocalMessage;
-using Microsoft.Extensions.LocalMessage.Subscriptions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.LocalMessage;
+using Microsoft.Extensions.LocalMessage.Subscriptions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
